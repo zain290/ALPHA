@@ -14,15 +14,17 @@ const DEFAULTS = {
   hero_line2: 'Where AI Meets Imagination.',
   products_title: 'A Gallery Powered by AI',
   products_paragraphs: [
-    "We believe that creativity is the ultimate human frontier. AI isn't here to replace the artist—it's here to provide a canvas without boundaries.",
-    "ALPHA was built to give everyone the tools to visualize their ideas in breathtaking quality. By integrating the latest generative models directly into our studio, we empower creators to bring their wildest visions to life.",
-    "Describe your vision in simple text and let our integrated engine render it into high-fidelity art within seconds. Save your best generations to your personal gallery, and share your unique aesthetic with the world.",
+    "We believe that creativity is the ultimate human frontier. AI isn't here to replace the artist—it's here to provide a canvas without boundaries. ALPHA is a next-generation platform designed to bridge the gap between imagination and reality.",
+    "Built from the ground up, ALPHA gives everyone the tools to visualize their ideas in breathtaking quality. By integrating the world's most advanced generative models directly into our intuitive studio, we empower creators, designers, and dreamers to bring their wildest visions to life.",
+    "Whether you're crafting marketing assets, conceptualizing worlds, or just exploring the depths of generative art, ALPHA is your engine. Describe your vision in simple text and watch it render into high-fidelity art within seconds.",
+    "We are constantly pushing the boundaries of what's possible, integrating new models, expanding our toolsets, and nurturing a community of creators who are redefining digital art."
   ],
-  services_items: ['Instant Image Generation', 'High-Fidelity Rendering', 'Personal Galleries', 'Community Curation', 'Creative Discovery'],
+  services_items: ['Instant Image Generation', 'High-Fidelity Rendering', 'Personal Galleries', 'Community Curation', 'Creative Discovery', 'API Integrations', 'Custom Model Fine-tuning'],
   faqs: [
-    { question: 'How do I create an image?', answer: 'Simply head over to the Create page, describe what you want to see in the prompt box, and let the AI generate it instantly.' },
-    { question: 'Can I save my creations?', answer: 'Yes! Every image you generate can be saved directly to your personal gallery to build your own portfolio of AI artwork.' },
-    { question: 'What powers the generation?', answer: 'We utilize advanced AI models to interpret your prompts and render highly detailed, creative imagery.' },
+    { question: 'How do I create an image?', answer: 'Simply head over to the Create page, describe what you want to see in the prompt box, select your preferred styling options, and let the ALPHA engine generate it instantly.' },
+    { question: 'Can I save my creations?', answer: 'Yes! Every image you generate can be saved directly to your personal gallery to build your own portfolio of AI artwork. You can organize, export, or share them at any time.' },
+    { question: 'What powers the generation?', answer: 'We utilize a dynamic cluster of advanced, state-of-the-art AI models. Our proprietary routing ensures your prompt is sent to the model best suited to render highly detailed, creative imagery for your specific request.' },
+    { question: 'Who owns the generated images?', answer: 'You do. You retain full commercial rights to the images you generate using ALPHA, allowing you to use them in your own projects, marketing, and products.' },
   ],
   cta_title: "Start creating today.",
   cta_button_text: 'Open Studio',
@@ -61,9 +63,9 @@ const About: React.FC<{ onOpenContact?: () => void }> = ({ onOpenContact }) => {
   return (
     <div ref={containerRef} className="about-container">
       <SEO 
-        title="ZEMZ | About Us" 
+        title="ALPHA | About Us" 
         description={`${pageData.hero_line1} ${pageData.hero_line2}`} 
-        canonicalUrl="https://zemz.pro/about" 
+        canonicalUrl="https://alpha.pro/about" 
       />
       <section className="about-hero-section">
         <div className="antigravity-wrapper" style={{ opacity: 0.8 }}>
