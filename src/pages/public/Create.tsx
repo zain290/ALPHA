@@ -135,11 +135,7 @@ const Create: React.FC<CreateProps> = () => {
     return () => clearInterval(interval);
   }, [genPhase]);
 
-  const resultsEndRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    resultsEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [results, genPhase]);
 
   const handleGenerate = async (userPrompt: string) => {
     if (!userPrompt.trim() || genPhase !== 'idle') return;
@@ -256,10 +252,13 @@ const Create: React.FC<CreateProps> = () => {
       animate={{ opacity: 1 }}
       transition={{ duration: 1.2, ease: 'easeOut' }}
     >
-      <SEO title="Create images with Gemini" description="Generate AI images from text prompts." canonicalUrl="/create" />
+      <SEO title="Create AI Images" description="Generate stunning AI images from text prompts. Use cutting-edge models to bring your creative vision to life in seconds." canonicalUrl="https://alpha.pro/create" />
 
       {/* Main Content Area */}
-      <div className="w-full max-w-4xl px-4 py-12 flex flex-col items-center">
+      <div 
+        className="w-full max-w-4xl px-4 pt-12 flex flex-col items-center transition-all duration-500"
+        style={{ paddingBottom: (results.length > 0 || genPhase !== 'idle') ? '200px' : '48px' }}
+      >
         
         {/* Header Text */}
         <div className="text-center mb-8">
@@ -284,7 +283,7 @@ const Create: React.FC<CreateProps> = () => {
                   </div>
 
                   {result.status === 'generating' && (
-                    <>
+                    <div className="w-1/2 flex flex-col">
                       <div className="w-full aspect-video md:aspect-[4/3] rounded-2xl overflow-hidden relative bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 flex items-center justify-center">
                         <DotField
                           dotRadius={1.5}
@@ -298,14 +297,14 @@ const Create: React.FC<CreateProps> = () => {
                           style={{ position: 'absolute', inset: 0, zIndex: 0 }}
                         />
                       </div>
-                      <div className="mt-3 px-1 text-left">
+                      <div className="mt-3 px-1 text-left w-full">
                         <ShinyText text={statusMessages[statusIndex]} />
                       </div>
-                    </>
+                    </div>
                   )}
 
                   {result.status === 'done' && result.imageUrl && (
-                    <div className="flex flex-col w-full">
+                    <div className="flex flex-col w-1/2">
                       {/* Image */}
                       <div className="w-full rounded-2xl overflow-hidden border border-neutral-200 dark:border-neutral-800 bg-neutral-100 dark:bg-neutral-900">
                         <img
@@ -356,18 +355,28 @@ const Create: React.FC<CreateProps> = () => {
                 </motion.div>
               ))}
             </AnimatePresence>
-            <div ref={resultsEndRef} />
+
           </div>
         )}
 
         {/* Gemini Style Input Box — now at the BOTTOM */}
-        <div className="w-full bg-[var(--color-create-surface)] rounded-3xl border border-transparent shadow-sm hover:border-neutral-300 focus-within:border-black focus-within:rounded-3xl dark:hover:border-neutral-600 dark:focus-within:border-white dark:focus-within:rounded-3xl transition-all duration-300 relative overflow-hidden">
+        <div className={`transition-all duration-500 w-full flex justify-center ${
+          results.length > 0 || genPhase !== 'idle'
+            ? 'fixed bottom-6 left-0 right-0 z-40 px-4'
+            : 'relative'
+        }`}>
+          <div className={`w-full ${results.length > 0 || genPhase !== 'idle' ? 'md:max-w-[35%] max-w-[90%] shadow-2xl' : ''} bg-[var(--color-create-surface)] rounded-3xl border border-transparent shadow-sm hover:border-neutral-300 focus-within:border-black focus-within:rounded-3xl dark:hover:border-neutral-600 dark:focus-within:border-white dark:focus-within:rounded-3xl transition-all duration-300 relative overflow-hidden`}>
           <form onSubmit={handleSubmit} className="flex flex-col">
             <textarea
               value={prompt}
-              onChange={e => setPrompt(e.target.value)}
+              onChange={e => {
+                setPrompt(e.target.value);
+                e.target.style.height = 'auto';
+                e.target.style.height = `${e.target.scrollHeight}px`;
+              }}
               placeholder="Describe the image you want to create"
-              className="w-full bg-transparent resize-none outline-none text-text p-6 min-h-[140px] text-lg font-normal placeholder:text-neutral-400 dark:placeholder:text-neutral-500"
+              className="w-full bg-transparent resize-none outline-none text-text p-6 min-h-[60px] max-h-[250px] overflow-y-auto text-lg font-normal placeholder:text-neutral-400 dark:placeholder:text-neutral-500"
+              style={{ overflowY: 'auto' }}
               disabled={genPhase === 'sketching' || genPhase === 'refining'}
               onKeyDown={(e) => {
                 if (e.key === 'Enter' && !e.shiftKey) {
@@ -409,6 +418,7 @@ const Create: React.FC<CreateProps> = () => {
               </button>
             </div>
           </form>
+          </div>
         </div>
 
         {/* Suggestion Chips — shown BELOW the input when no results yet */}

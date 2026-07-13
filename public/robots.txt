@@ -1,0 +1,41 @@
+# ALPHA — robots.txt
+# Updated: July 2026
+
+# --- Global: allow all standard search crawlers ---
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /uploads/
+
+# --- Block AI training crawlers ---
+User-agent: Bytespider
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: Amazonbot
+Disallow: /
+
+User-agent: Applebot-Extended
+Disallow: /
+
+User-agent: meta-externalagent
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+# --- Allow AI citation/answer crawlers ---
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+# Sitemaps
+Sitemap: https://alpha.pro/sitemap_index.xml
+Sitemap: https://alpha.pro/sitemap.xml

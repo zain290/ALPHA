@@ -84,7 +84,7 @@ const Showcase = () => {
       animate={{ opacity: 1 }}
       transition={{ duration: 1.2, ease: 'easeOut' }}
     >
-      <SEO title="ALPHA | Showcase" description="Explore AI-generated artistry in our gallery." canonicalUrl="/" />
+      <SEO title="Showcase" description="Explore AI-generated artistry in our gallery. Browse stunning visuals created with cutting-edge generative AI models." canonicalUrl="https://alpha.pro/" />
 
       <div className="max-w-7xl mx-auto px-4 py-12 mb-[100px]">
         <div className="relative">

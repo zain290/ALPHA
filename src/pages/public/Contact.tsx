@@ -11,7 +11,7 @@ const Contact: React.FC = () => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, ease: 'easeOut' }}
     >
-      <SEO title={`${AGENCY_DATA.name} | Contact & About Us`} description={AGENCY_DATA.tagline} canonicalUrl="/contact" />
+      <SEO title="Contact" description="Get in touch with ALPHA. We'd love to hear about your project, collaboration ideas, or any questions about our AI image generation platform." canonicalUrl="https://alpha.pro/contact" />
 
       <div className="w-full max-w-3xl flex flex-col gap-12">
         {/* Header section */}

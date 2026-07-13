@@ -113,8 +113,8 @@ const PrivacyPolicy: React.FC = () => {
   return (
     <div className="privacy-container">
       <SEO
-        title="ALPHA | Privacy Policy"
-        description={`${pageData.hero_line1} - ${pageData.hero_line2}`}
+        title="Privacy Policy"
+        description="Learn how ALPHA collects, uses, and protects your personal information. Our commitment to transparency and data privacy."
         canonicalUrl="https://alpha.pro/privacy-policy"
       />
       <section className="privacy-hero-section">

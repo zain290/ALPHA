@@ -51,7 +51,7 @@ const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme }) => {
 
   return (
     <header className={`header header-${theme}`}>
-      <nav ref={navRef} className="nav">
+      <nav ref={navRef} className="nav" aria-label="Main navigation">
         <Link to="/" className="brand">{brandName}</Link>
 
         <div className="controls flex items-center">

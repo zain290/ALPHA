@@ -63,8 +63,8 @@ const About: React.FC<{ onOpenContact?: () => void }> = ({ onOpenContact }) => {
   return (
     <div ref={containerRef} className="about-container">
       <SEO 
-        title="ALPHA | About Us" 
-        description={`${pageData.hero_line1} ${pageData.hero_line2}`} 
+        title="About Us" 
+        description="Discover ALPHA — where AI meets imagination. Learn about our mission to empower creators with cutting-edge generative AI tools." 
         canonicalUrl="https://alpha.pro/about" 
       />
       <section className="about-hero-section">

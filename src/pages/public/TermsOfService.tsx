@@ -115,8 +115,8 @@ const TermsOfService: React.FC = () => {
   return (
     <div className="terms-container">
       <SEO 
-        title="ALPHA | Terms of Service" 
-        description={`${pageData.hero_line1} - ${pageData.hero_line2}`} 
+        title="Terms of Service" 
+        description="Read the terms governing your use of ALPHA's AI image generation platform. Understand your rights and responsibilities." 
         canonicalUrl="https://alpha.pro/terms" 
       />
       <section className="terms-hero-section">

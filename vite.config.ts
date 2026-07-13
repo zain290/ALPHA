@@ -5,7 +5,8 @@ import tailwindcss from '@tailwindcss/vite'
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   server: {
-    proxy: { '/api': 'http://localhost:3001', '/uploads': 'http://localhost:3001' },
+    port: 5328,
+    proxy: { '/api': 'http://localhost:5329', '/uploads': 'http://localhost:5329', '/sitemap_index.xml': 'http://localhost:5329', '/sitemap.xml': 'http://localhost:5329', '/sitemap-pages.xml': 'http://localhost:5329', '/sitemap-images.xml': 'http://localhost:5329' },
   },
 })
 // trigger restart

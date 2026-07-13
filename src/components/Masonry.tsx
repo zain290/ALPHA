@@ -52,14 +52,18 @@ const useMeasure = () => {
   return [ref, size] as const;
 };
 
-const preloadImages = async (urls: string[]) => {
+const preloadImages = async (urls: string[], onSize?: (url: string, w: number, h: number) => void) => {
   await Promise.all(
     urls.map(
       src =>
         new Promise<void>(resolve => {
           const img = new Image();
           img.src = src;
-          img.onload = img.onerror = () => resolve();
+          img.onload = () => {
+            onSize?.(src, img.naturalWidth, img.naturalHeight);
+            resolve();
+          };
+          img.onerror = () => resolve();
         })
     )
   );
@@ -84,6 +88,8 @@ const Masonry = ({
 
   const [containerRef, { width }] = useMeasure();
   const [imagesReady, setImagesReady] = useState(false);
+  const [expandedId, setExpandedId] = useState<string | null>(null);
+  const [imageSizes, setImageSizes] = useState<Record<string, { w: number, h: number }>>({});
 
   const getInitialPosition = (item: { x: number; y: number; w: number; h: number }) => {
     const containerRect = containerRef.current?.getBoundingClientRect();
@@ -112,7 +118,9 @@ const Masonry = ({
   };
 
   useEffect(() => {
-    preloadImages(items.map(i => i.img)).then(() => setImagesReady(true));
+    preloadImages(items.map(i => i.img), (url, w, h) => {
+      setImageSizes(prev => ({ ...prev, [url]: { w, h } }));
+    }).then(() => setImagesReady(true));
   }, [items]);
 
   const { gridItems, maxColHeight } = useMemo(() => {
@@ -122,6 +130,37 @@ const Masonry = ({
     const columnWidth = width / columns;
 
     const itemsWithPos = items.map(child => {
+      const isExpanded = child.id === expandedId;
+      const naturalSize = imageSizes[child.img];
+      const ratio = naturalSize ? naturalSize.w / naturalSize.h : 1;
+
+      if (isExpanded) {
+        const y = Math.max(...colHeights);
+        let targetW = naturalSize ? naturalSize.w : width;
+        let targetH = naturalSize ? naturalSize.h : child.height;
+        
+        if (targetW > width) {
+           const scale = width / targetW;
+           targetW *= scale;
+           targetH *= scale;
+        }
+        
+        const maxH = typeof window !== 'undefined' ? window.innerHeight * 0.8 : 800;
+        if (targetH > maxH) {
+           const scale = maxH / targetH;
+           targetW *= scale;
+           targetH *= scale;
+        }
+
+        const x = (width - targetW) / 2;
+        
+        for (let i = 0; i < columns; i++) {
+          colHeights[i] = y + targetH + 20;
+        }
+        
+        return { ...child, x, y, w: targetW, h: targetH, isExpanded };
+      }
+
       const col = colHeights.indexOf(Math.min(...colHeights));
       const x = columnWidth * col;
       const height = child.height / 2;
@@ -129,11 +168,11 @@ const Masonry = ({
 
       colHeights[col] += height;
 
-      return { ...child, x, y, w: columnWidth, h: height };
+      return { ...child, x, y, w: columnWidth, h: height, isExpanded };
     });
 
     return { gridItems: itemsWithPos, maxColHeight: Math.max(...colHeights) };
-  }, [columns, items, width]);
+  }, [columns, items, width, expandedId, imageSizes]);
 
   const hasMounted = useRef(false);
 
@@ -221,7 +260,11 @@ const Masonry = ({
           key={item.id}
           data-key={item.id}
           className="item-wrapper"
-          onClick={() => item.url && window.open(item.url, '_blank', 'noopener')}
+          style={{ zIndex: (item as any).isExpanded ? 10 : 1 }}
+          onClick={() => {
+            if (item.url) window.open(item.url, '_blank', 'noopener');
+            else setExpandedId(prev => prev === item.id ? null : item.id);
+          }}
           onMouseEnter={e => handleMouseEnter(e, item)}
           onMouseLeave={e => handleMouseLeave(e, item)}
         >
