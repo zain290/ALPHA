@@ -4,6 +4,7 @@ import { getImages, saveImage, deleteImage } from '../controllers/images.control
 import { generateImage } from '../controllers/generate.controller'
 import { getSettings } from '../controllers/settings.controller'
 import { getPage } from '../controllers/pages.controller'
+import { chat } from '../controllers/chat.controller'
 
 const router = Router()
 
@@ -14,5 +15,6 @@ router.delete('/images/:id', deleteImage)
 router.post('/generate', generateImage)
 router.get('/settings', getSettings)
 router.get('/pages/:slug', getPage)
+router.post('/chat', chat)
 
 export { router as apiRoutes }
