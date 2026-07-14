@@ -132,8 +132,6 @@ const Masonry = ({
     const itemsWithPos = items.map(child => {
       const isExpanded = child.id === expandedId;
       const naturalSize = imageSizes[child.img];
-      const ratio = naturalSize ? naturalSize.w / naturalSize.h : 1;
-
       if (isExpanded) {
         const y = Math.max(...colHeights);
         let targetW = naturalSize ? naturalSize.w : width;

@@ -3,7 +3,6 @@ import { motion } from 'framer-motion';
 import ScrollReveal from '../../components/ScrollReveal';
 import SplitText from '../../components/SplitText';
 import Antigravity from '../../components/Antigravity';
-import Magnet from '../../components/Magnet';
 import ProjectThumbnailSection, { type ProjectThumbnail } from '../../components/ProjectThumbnailSection';
 import { getPage, getProjects, getSettings } from '../../controllers/apiController';
 import SEO from '../../components/SEO';
@@ -31,13 +30,13 @@ const DEFAULTS = {
   cta_button_link: '/create',
 };
 
-const About: React.FC<{ onOpenContact?: () => void }> = ({ onOpenContact }) => {
+const About: React.FC<{ onOpenContact?: () => void }> = ({ onOpenContact: _onOpenContact }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [pageData, setPageData] = useState(DEFAULTS);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [projects, setProjects] = useState<ProjectThumbnail[]>([]);
   const [isLoadingProjects, setIsLoadingProjects] = useState(true);
-  const [siteSettings, setSiteSettings] = useState({ cta_title: DEFAULTS.cta_title, cta_button_text: DEFAULTS.cta_button_text, contact_email: 'christian@offmenu.design' });
+  const [_siteSettings, setSiteSettings] = useState({ cta_title: DEFAULTS.cta_title, cta_button_text: DEFAULTS.cta_button_text, contact_email: 'christian@offmenu.design' });
 
   useEffect(() => {
     getPage('about').then(d => {
@@ -57,8 +56,6 @@ const About: React.FC<{ onOpenContact?: () => void }> = ({ onOpenContact }) => {
       });
     }).catch(() => { });
   }, []);
-
-  const ctaHref = `/create`;
 
   return (
     <div ref={containerRef} className="about-container">
