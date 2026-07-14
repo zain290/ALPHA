@@ -1,8 +1,17 @@
 const API_BASE = '/api'
 
+function getDeviceId(): string {
+  let id = localStorage.getItem('alpha_device_id')
+  if (!id) {
+    id = crypto.randomUUID()
+    localStorage.setItem('alpha_device_id', id)
+  }
+  return id
+}
+
 async function request<T>(endpoint: string, options?: RequestInit): Promise<T> {
   const res = await fetch(`${API_BASE}${endpoint}`, {
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json', 'X-Device-Id': getDeviceId() },
     ...options,
   })
   if (!res.ok) throw new Error(`API error: ${res.status}`)

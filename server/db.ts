@@ -27,4 +27,13 @@ db.exec(`
   )
 `)
 
+db.exec(`
+  CREATE TABLE IF NOT EXISTS rate_limits (
+    device_key TEXT NOT NULL,
+    window_start TEXT NOT NULL,
+    request_count INTEGER DEFAULT 0,
+    PRIMARY KEY (device_key, window_start)
+  )
+`)
+
 export default db
